@@ -35,16 +35,27 @@ router.get('/:id', (req, res) => {
 })
 
 router.post('/', (req, res) => {
-    Post.insert(req.body)
-        .then(post => {
-            // an if statement to handle the two possible messages, will finish later today 
+    const { title, contents } = req.body
+    if (!title || !contents) {
+        res.status(400).json({
+            message: 'Please provide title and contents for the post'
         })
-        .catch(err => {
-            console.log(err)
-            res.status(500).json({
-                message: "There was an error while saving the post to the database",
+    } else {
+        Post.insert({ title, contents })
+            .then(({ id }) => {
+                return Post.findById(id)
             })
-        })
+            .then(post => {
+                res.status(201).json(post)
+            }) 
+            .catch(err => {
+                res.status(500).json({
+                    message: "There was an error while saving the post tot he database",
+                    err: err.message,
+                    stack: err.stack
+                })
+            })
+    }
 
 })
 
