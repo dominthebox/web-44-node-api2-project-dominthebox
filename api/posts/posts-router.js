@@ -37,7 +37,7 @@ router.get('/:id', (req, res) => {
 router.post('/', (req, res) => {
     Post.insert(req.body)
         .then(post => {
-
+            // an if statement to handle the two possible messages, will finish later today 
         })
         .catch(err => {
             console.log(err)
