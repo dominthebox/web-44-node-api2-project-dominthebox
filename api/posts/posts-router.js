@@ -6,7 +6,6 @@ const router = express.Router()
 
 router.get('/', async (req, res) =>{
     try {
-        console.log('getting posts with async/await!')
         const posts = await Post.find()
         res.status(200).json(posts)
     } catch (err) {
@@ -17,11 +16,38 @@ router.get('/', async (req, res) =>{
 })
 
 router.get('/:id', (req, res) => {
-
+   Post.findById(req.params.id)
+    .then(post => {
+        if (post) {
+            res.status(200).json(post);
+        } else {
+            res.status(404).json({
+                message: "The post with the specified ID does not exist",
+            })
+        }
+    })
+    .catch(err => {
+        console.log(err)
+        res.status(500).json({
+            message: "The post information could not be retrieved",
+        })
+    })
 })
+
 router.post('/', (req, res) => {
+    Post.insert(req.body)
+        .then(post => {
+
+        })
+        .catch(err => {
+            console.log(err)
+            res.status(500).json({
+                message: "There was an error while saving the post to the database",
+            })
+        })
 
 })
+
 router.delete('/:id', (req, res) => {
 
 })
