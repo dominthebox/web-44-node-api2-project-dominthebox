@@ -4,31 +4,33 @@ const Posts = require('./posts-model');
 
 const router = express.Router()
 
-
-router.get('/api/posts', (req, res) => {
-    Posts.find()
-        .then(posts => {
-            console.log(posts)
-            // res.status(200).json(posts);
-        })
-        .catch(err => {
-            console.log(err)
-            res.status(500).json({
-                message: 'Error retrieving the Posts',
-            })
-        })
+router.get('/', async (req, res) =>{
+    res.json('HAL HERE')
+    // try {
+    //     console.log('getting posts with async/await!')
+    //     const posts = await Posts.find()
+    //     res.status(200).json(posts)
+    // } catch (err) {
+    //     res.status(500).json({
+    //         message: "The posts information could not be retrieved",
+    //     })
+    // }
 })
 
-router.get('/api/posts', async (req, res) =>{
-    try {
-        console.log('getting posts with async/await!')
-        const posts = await Posts.find()
-        res.status(200).json(posts)
-    } catch (err) {
-        res.status(500).json({
-            message: "The posts information could not be retrieved",
-        })
-    }
+router.get('/:id', (req, res) => {
+
+})
+router.post('/', (req, res) => {
+
+})
+router.delete('/:id', (req, res) => {
+
+})
+router.put('/:id', (req, res) => {
+
+})
+router.get('/:id/messages', (req, res) => {
+
 })
 
 
